@@ -1,0 +1,407 @@
+---
+title: "A Functional Quantile Regression Approach to Estimating Intergenerational Mobility"
+author: "Le Wang"
+institute: Virginia Tech
+#date: Nov 17, 2023
+title-slide-attributes:
+  data-background-color: rgb(134,31,65)
+format: 
+  revealjs:
+    html-math-method: mathjax
+    template-partials:
+      - _aux/title-slide.html    
+    theme: _aux/metropolis.scss
+    toc: false
+    toc-depth: 1
+    toc-title: "Road Map"	
+    transition: fade
+    slide-number: true
+    chalkboard: true    
+    preview-links: auto
+editor: visual
+#filters:
+#  - reveal-auto-agenda
+---
+
+{{< include _aux/macro.qmd >}}
+
+# Is it a good fit?
+
+## My Question
+
+::: {.incremental .fragment}
+![](https://cdn.mathpix.com/snip/images/IThiRtiy_AfV3uWtRQg1Oja1RIwKl_S4T_X20jLuyag.original.fullsize.png)
+:::
+
+::: {.incremental .fragment}
+![](https://cdn.mathpix.com/snip/images/94jgymXzAA5r7wAP1wWvPn0pv6Z5P-8FcZN1OIu1Ql8.original.fullsize.png)
+:::
+
+# Evolution of the Idea: Step 0,1,2
+
+## Step 0: The norm
+
+> The most widely used approach to studying intergenerational income mobility is to estimate the degree of income persistence across generations. When intergenerational income persistence is very high, then this implies that income mobility is low. In the economics literature, the most commonly used measure is the IGE. -- Mazumder (2019)
+
+$$
+Y = \alpha + \beta X + \epsilon
+$$ where $Y$ is child [permanent]{.blue} income and $X$ is parental [permanent]{.blue} income.
+
+Typically, $Y$ and $X$ are multiyear time averages of child and parental incomes over certain ages, respectively.
+
+## Step 0: The norm (Mazumder, 2019) {.smaller}
+
+|       Study       |   Data   |                                                          Description of Method                                                          | Estimate |
+|:-------:|:-------:|:-------------------------------------------:|:-------:|
+|   Solon (1992).   |   PSID   |                   Uses a [**5-year**]{.red} average of annual earnings of fathers and a single year of sons' earnings                   |   0.41   |
+| Zimmerman (1992). |   NLS    |                    Uses a [**4-year**]{.red} average of fathers' hourly wage and a single year of sons' hourly wage                     |   0.39   |
+| zimmerman (1992). |   NLS    |                Uses a [**4-year**]{.red} average of fathers' annual earnings and a single year of sons' annual earnings                 |   0.54   |
+| Mazumder (2005b). | SIPP-SSA |                 Uses a [**16-year**]{.red} average of annual earnings of fathers and a 4-year average of sons' earnings                 |   0.61   |
+| Mazumder (2005a). |   PSID   | Uses a [**5-year**]{.red} average of annual income of fathers and a single year of sons' income as in Solon (1992). but implements HEIV |   0.62   |
+
+## Step 0: The norm -- Limitations (1)
+
+1.  Conceptually, what is the [**permanent**]{.blue} income? It is essentially [**latent**]{.red}. The time average is really an attempt to measure such variable, with the implicit assumption that
+
+::: {.incremental .fragment}
+*Every observed annual income is a measurement of the permanent income, with [classical]{.red} error*
+:::
+
+## Step 0: The norm -- Limitations (2)
+
+2.  Why [linear]{.red}? Why [mean]{.red}?
+
+::: {.incremental .fragment}
+1.  [**Poverty Trap**]{.blue} Early seminal models due to Becker and Tomes (1979) and Loury (1976) highlight family income as a key constraining factor in human capital formation, which implies a strong persistence in the lower tail of the distribution and gives rise to poverty traps.
+
+2.  Focusing on provision of public goods, role model, and peer effects, social theories of intergenerational mobility mimic the Becker-Tomes environment that is [**highly nonlinear**]{.blue} and can also produce [**poverty traps**]{.blue} (Durlauf, 1996b; Durlauf, 1996a). In fact, Durlauf (1996a) produces an exact threshold relationship between child and parental incomes.
+
+3.  By emphasizing complementarities in the production of children's human capital, Becker et al. (2018) show that a strong intergenerational persistence in incomes can exist, even in the absence of credit constraints, and that mobility is low in the upper part of the income distribution; the so-called [**affluence trap**]{.blue}.
+:::
+
+## Step 1: Extension (Strong Evidence of Nonlinearity at the Mean)
+
+![](figures/fqr02.png)
+
+## Step 1: Extension (Strong Evidence of Depedence at the Distribution)
+
+![](figures/fqr03.png)
+
+## Step 0: The norm -- Limitations (3)
+
+[Why]{.blue} [permanent]{.red} income at all?
+
+1.  Credit constraints can imply that the [**timing**]{.blue} of parental income matters for investments in children
+
+2.  the modern skills literature (e.g., Cunha and Heckman (2008)) has emphasized that the investments at one age affect the marginal value of investments at others.
+
+3.  the nature of the investments made by parents qualitatively changes across the life course. Wodtke et al. (2011), for example, show the relative influences of family versus neighborhood characteristics change across the life course with neighborhoods becoming more influential in adolescence. Such dynamics imply a special role of adolescent incomes in terms of the ability of parents to locate their families in higher quality neighborhoods.
+
+## Step 1: Extension (Strong Evidence of Trajectory or Timing Effects)
+
+![](figures/fqr04.png)
+
+## Step 2: Our Paper
+
+![](figures/fqr01.png)
+
+# Our Methodology
+
+## Our contributions
+
+![](figures/fqr05.png)
+
+## Road Map
+
+![](figures/fqr06.png)
+
+## Road Map
+
+![](figures/fqr07.png)
+
+## Preliminary
+
+Scalar on Function Model $$
+Y=a+\int_0^1 X(t) \beta(t) \mathrm{d} t+\int_0^1 \int_0^1 \gamma(s, t) X(s) X(t) \mathrm{d} s \mathrm{~d} t+\epsilon .
+$$
+
+## Preliminary
+
+Function on Function Model (Jin et al. 2023) $$
+Y_i(r)=\int_{\mathbb{I}_x} \int_{\mathbb{I}_z} X_i(s) X_i(t) \beta(r, s, t) \mathrm{d} s \mathrm{~d} t+\epsilon_i(r), \quad r \in \mathbb{I}_y,
+$$
+
+where $Y_i(r)$ and $\left(X_i(s), X_i(t)\right)$ denote the functional response and functional covariates, respecively, and $\mathbb{I}_y$ and $\left(\mathbb{I}_x\right)$ denote their respective domains.
+
+[Functional ANOVA decomposition]{.blue}
+
+$$
+\begin{aligned}
+Y_i(t)= & \alpha(t)+\int_{I_x} X_i(r) \beta_x(t, r) \mathrm{d} r+\int_{I_z} Z_i(s) \beta_z(t, s) \mathrm{d} s \\
+& +\int_{I_z} \int_{I_z} X_i(r) Z_i(s) \beta_{x z}(t, r, s) \mathrm{d} s \mathrm{~d} r+\epsilon_i(t) .
+\end{aligned}
+$$
+
+## Our Methodology: Model
+
+$$
+Q_{Y \mid X}(\tau)=\int_0^1 \int_0^1 X(s) X(t) \beta(t, s, \tau) \mathrm{d} t \mathrm{~d} s
+$$
+
+[ANOVA Decomposition]{.blue}
+
+$$
+\beta=\beta_c+\beta_t+\beta_s+\beta_{t, s}
+$$
+
+1.  Main Effect
+2.  Individual effect
+3.  Interaction Effect
+
+## Our Methodology: Estimation
+
+The coefficient functions in our functional quantile regression model are estimated through a [reproducing kernel Hilbert space]{.blue} (RKHS) approach, which is well-known to be more accurate than the FPCA approach.
+
+## Our Methodology: Estimation
+
+The FPCA represents each coefficient function as the linear combination of a small number of leading FPCs.
+
+::: {.incremental .fragment}
+1.  the number of leading FPCs is the only tuning parameter for controlling the smoothness of the coefficient function estimate.
+
+2.  Its discrete nature (e.g., you can't choose 3.5 FPCs, only 3 or 4) is not ideal for finding the precise level of smoothing for the function estimate.
+
+3.  The leading FPCs are derived from the predictor function $X_i(t)$. They are essentially estimates of the leading eigenfunctions of the covariance process of $X_i(t)$. Although the Karhunen-Loeve Theorem guarantees the efficiency of these leading eigenfunctions in representing the predictor functions $X_i(t)$, they may not be the best basis functions for expressing the regression coefficient functions; see, e.g., Bair et al. (2006, JASA) and Cai and Yuan (2012, JASA). Such inefficiency of FPCA can lead to poor numerical performance when the coefficient function is multi-dimensional; see, e.g., the numerical example in Sun, Du, Wang, and Ma (2018, JASA).
+:::
+
+## Our Methodology: Estimation
+
+$$
+\tilde{\beta}(\cdot, \cdot, \tau)=\underset{\beta \in \mathcal{H}}{\arg \min } \mblue{ \frac{1}{n} \sum_{i=1}^n \rho_\tau\left\{Y_i-\alpha-\int_0^1 \int_0^1 \beta(t, s, \tau) X_i(t) X_i(s) \mathrm{d} t \mathrm{~d} s\right\}}+\frac{\lambda}{2} J(\beta, \beta),
+$$
+
+1.  $\rho_\tau(u)=u[\tau-\mathbb{1}(u<0)]$ denotes the check loss function for quantile regression (QR).
+
+2.  $J(\beta, \beta)$ denotes a roughness penalty functional,
+
+3.  $\lambda$ denotes the tuning parameter controlling the trade off between the goodness of fit and the plausibility of the estimated slope function.
+
+As $\rho_\tau$ is not differentiable at 0, direct minimization through setting its derivative with respect to $\beta$ to 0 becomes [**infeasible**]{.red}.
+
+## Our Methodology: Estimation
+
+We can rewrite the above as follows to gain some intuition:
+
+$$
+\hat{R}(\beta ; \tau):=\frac{1}{n} \sum_{i=1}^n \rho_\tau\left\{\epsilon_i(\theta)\right\}=\int \rho_\tau(u) \mathrm{d} \mred{\hat{F}(u ; \beta)},
+$$
+
+where $\epsilon_i(\beta)=Y_i-\int_0^1 \int_0^1 \beta(t, s, \tau) X_i(t) X_i(s) \mathrm{d} t \mathrm{~d} s$ and $\hat{F}(\cdot ; \beta)$ is the corresponding empirical distribution function.
+
+Since $\hat{F}(\cdot ; \beta)$ is a step function, $\hat{R}(\beta ; \tau)$ is not differentiable with respect to $\beta$. What to do next?
+
+## Our Methodology: Estimation
+
+$$
+\hat{R}(\beta ; \tau):=\frac{1}{n} \sum_{i=1}^n \rho_\tau\left\{\epsilon_i(\theta)\right\}=\int \rho_\tau(u) \mathrm{d} \mred{\hat{F}(u ; \beta)},
+$$
+
+[**Convolution-Based Method**: Smoothed version]{.blue}
+
+$$
+\hat{R}_h(\beta ; \tau):=\int \rho_\tau(u) \mathrm{d} \mred{\hat{F}_h(u ; \beta)}=\int \rho_\tau(u) \mblue{\hat{f}_h(u ; \beta) \mathrm{d} u} .
+$$
+
+where $k_h(\cdot)=k(\frac{v/h}{h})$ satisfying the usual kernel properties. $$
+\hat{f}_h(v ; \beta)=n^{-1} \sum_{i=1}^n k_h\left\{v-\epsilon_i(\beta)\right\} \text { for any given } \beta \in \mathcal{H}
+$$
+
+$$
+\hat{F}_h(u ; \beta)=\int_{-\infty}^u \hat{f}_h(v ; \beta) \mathrm{d} v .
+$$
+
+## Our Methodology: Estimation -- Problem
+
+$$
+\hat{\beta}_{h \lambda}(\cdot, \tau)=\underset{\beta \in \mathcal{H}}{\arg \min } \hat{R}_h(\beta ; \tau)+\frac{\lambda}{2} J(\beta, \beta) .
+$$
+
+::: {.incremental .fragment}
+[**Penalty term:**]{.blue} Ensure smoothness,
+
+$$
+\begin{aligned}
+J(\beta, \beta)= & \int_0^1\left[\left\{\int_0^1 \morange{ \frac{\partial^2}{\partial s^2} \beta(t, s, \tau)} \mathrm{d} t\right\}^2+\left\{\int_0^1 \morange{\frac{\partial^3}{\partial t \partial s^2} \beta(t, s, \tau)} \mathrm{d} t\right\}^2\right] \mblue{\mathrm{d} s} \\
+& +\int_0^1\left[\left\{\int_0^1 \morange{\frac{\partial^2}{\partial t^2} \beta(t, s, \tau)} \mathrm{d} s\right\}^2+\left\{\int_0^1 \morange{\frac{\partial^3}{\partial t^2 \partial s} \beta(t, s, \tau)} \mathrm{d} s\right\}^2\right] \mblue{\mathrm{d} t} \\
+& +\int_0^1 \int_0^1\left\{\morange{\frac{\partial^4}{\partial t^2 \partial s^2} \beta(t, s, \tau)}\right\}^2 \mblue{\mathrm{~d} t \mathrm{~d} s} .
+\end{aligned}
+$$
+
+This functional is a natural extension of the roughness penalty $\int_0^1\left\{\beta^{(2)}(t)\right\}^2 \mathrm{~d} t$ used in univariate smoothing splines.
+:::
+
+## Our Methodology: Estimation -- Problem
+
+Why These Specific Derivatives?
+
+-   Second Derivatives ( $\left.\frac{\partial^2}{\partial t^2}, \frac{\partial^2}{\partial s^2}\right)$ :
+
+    -   Reflect the curvature of $\beta$ in each direction.
+    -   Penalizing them encourages linearity or gentle curves rather than sharp bends.
+
+-   Third Derivatives $\left(\frac{\partial^3}{\partial t^2 \partial s}, \frac{\partial^3}{\partial t \partial s^2}\right)$ :
+
+    -   Capture how the curvature in one variable changes with the other variable.
+    -   Penalizing them controls the rate at which the curvature itself changes across the other dimension.
+
+-   Fourth Derivative $\left(\frac{\partial^4}{\partial t^2 \partial s^2}\right)$ :
+
+    -   Measures the complexity of interactions between $t$ and $s$.
+    -   Penalizing it ensures that $\beta$ does not have overly complex surface twists.
+
+## Our Methodology: Estimation -- Solution
+
+**Reproducing Kernel Hilbert Space (RKHS)**
+
+-   RKHS is a Hilbert space of functions where evaluation at any point can be represented as an inner product with a kernel function.
+-   The kernel function $K$ plays a central role, as it encapsulates the properties of the function space.
+
+::: {.incremental .fragment}
+**Decomposition of RKHS** The RKHS $\mathcal{H}$ can be decomposed into two orthogonal subspaces:
+
+-   Null Space $\mathcal{H}_0$ : Functions that are [not penalized]{.red} by the smoothing penalty.
+-   Penalized Space $\mathcal{H}_1$ : Functions that are [penalized]{.red} to enforce smoothness.
+:::
+
+::: {.incremental .fragment}
+Each subspace has its own reproducing kernel: (reproducing kernel, and it reproduces the value of $f(x)$ via the inner product.)
+
+-   $K_0$ : The reproducing kernel for $\mathcal{H}_0$.
+-   $K_1$ : The reproducing kernel for $\mathcal{H}_1$.
+:::
+
+## Our Methodology: Estimation -- Solution
+
+[$J(\beta, \beta)$ is actually a squared semi-norm in $\mathcal{H}$.]{.blue} $J(\beta, \beta)=\|\beta\|_{K_1}^2=\left\|\beta_1\right\|_{K_1}^2$.
+
+The null space of $J, \mathcal{H}_0=\{h \in \mathcal{H}: J(h, h)=0\}$, is a finite dimensional space.
+
+Let $\mathcal{H}_1$ denote the orthonormal complement of $\mathcal{H}_0$ in $\mathcal{H}$. Therefore, for any $\beta \in \mathcal{H}$, there exist unique $\beta_0$ and $\beta_1$ in $\mathcal{H}_0$ and $\mathcal{H}_1$ such that $\beta=\beta_0+\beta_1$. Let $K_0$ and $K_1$ denote the reproducing kernel of $\mathcal{H}_0$ and $\mathcal{H}_1$, respectively. Then we have
+
+## Our Methodology: Estimation -- Solution
+
+With [representer theorem]{.blue}, the function $\beta(t, s, \tau)$ can be expressed in terms of finite basis functions and coefficients as follows:
+
+$$
+\beta(t, s, \tau)=\boldsymbol{d}^{\top} \psi(t, s)+\boldsymbol{c}^{\top} \xi(t, s),
+$$
+
+-   d: A finite-dimensional vector of coefficients associated with basis functions $\psi(t, s)$.
+-   $\psi(t, s)$ : A vector of predefined basis functions.
+-   $\boldsymbol{c}$ : A finite-dimensional vector of coefficients associated with data-dependent functions $\xi(t, s)$.
+-   $\xi(t, s)$ : Functions derived from the data and the RKHS kernels.
+
+## Our Methodology: Estimation -- Solution
+
+By substituting $\beta(t, s, \tau)$ into the objective function, the [infinite-dimensional]{.red} minimization problem becomes a [finite-dimensional]{.blue} one:
+
+$$
+\begin{aligned}
+M(\boldsymbol{d}, \boldsymbol{c} ; \tau) & =\frac{1}{n} \sum_{i=1}^n g_h\left\{Y_i-\sum_{l=1}^4 d_l \int_0^1 X_i(t) X_i(s) \psi_l(t, s) d t d s\right. \\
+& \left.-\sum_{j=1}^{n^2+4 n} c_j \int_0^1 \int_0^1 X_i(t) X_i(s) \xi_j(t, s) d t d s, \tau\right\}+\frac{\lambda}{2} \boldsymbol{c}^{\top} \boldsymbol{\Xi} \boldsymbol{c}
+\end{aligned}
+$$
+
+-   $M(\boldsymbol{d}, \boldsymbol{c} ; \tau)$ : The finite-dimensional objective function to be minimized.
+-   $g_h(u, \tau)$ : A smoothed version of the quantile loss function, defined as: $$
+    g_h(u, \tau)=\int_{\mathbb{R}} \rho_\tau(v) k_h(v-u) d v
+    $$ where $\rho_\tau(v)$ is the quantile loss function and $k_h$ is a kernel function with bandwidth $h$.
+-   $\boldsymbol{\Xi}$ : A matrix representing the penalty term associated with $\boldsymbol{c}$, with entries $\left\langle\xi_i(\cdot, \cdot), \xi_j(\cdot, \cdot)\right\rangle_{\mathcal{H}_1}$.
+
+## Our Methodology: Algorithm
+
+-   [Gradient Descent Algorithm:]{.blue} By iteratively updating $\boldsymbol{d}$ and $\boldsymbol{c}$ using the computed gradients, we can find the coefficients that minimize the objective function $M(\boldsymbol{d}, \boldsymbol{c} ; \tau)$.
+
+# Simulation Exericse
+
+## Simulation Design
+
+$$
+Y=\int_0^1 \int_0^1 X(t) X(s) \beta_0(t, s) \mathrm{d} t \mathrm{~d} s+\epsilon
+$$
+
+1.  $X(t)=\sum_{j=1}^{50}(-1)^{j+1} j^{-1} \zeta_j \varphi_j(t)$, where $\zeta_1, \ldots, \zeta_{50}$ are i.i.d uniformly distributed on $[-\sqrt{3}, \sqrt{3}], \varphi_1(t)=1$ and $\varphi_j(t)=\sqrt{2} \cos ((j-1) \pi t)$ for $t \in[0,1]$. This design for $X$ is commonly adopted in the literature of FDA
+
+2.  $\beta_0(t, s)=\exp \{-(t+s)\}$, and both normal and student-t distribution with 3 degrees of freedom are considered for $\epsilon$.
+
+3.  We consider two signal-to-noise (SNR) levels, $10$ and $5$, for both distributions for $\epsilon$.
+
+4.  Under each simulation design, we generate $n=100$ independent copies of $(X, Y)$ in each simulation run to estimate $\beta_0$.
+
+5.  $200$ independent simulation runs are conducted.
+
+## Simulation Results
+
+$$
+\operatorname{MISE}=\frac{1}{200} \sum_{k=1}^{200} \int_0^1 \int_0^1\left\{\left(\hat{\beta}_k(t, s, \tau)-\beta_0(t, s, \tau)\right\}^2 \mathrm{~d} t \mathrm{~d} s\right.
+$$
+
+where $\hat{\beta}_k(t, s, \tau)$ denotes the estimated coefficient function from the $k$ th simulation run.
+
+## Simulation Results
+
+![](https://cdn.mathpix.com/snip/images/MZPieKjiTn96gRDVGfsTDeeR2rfhahSv7sJfQdg7lS0.original.fullsize.png)
+
+1.  When stronger signals (relative to the noise) are present, our algorithm yields more accurate estimates of the slope function.
+
+2.  This comparison demonstrates the advantage of quantile regression in the presence of [heavy-tailed responses]{.blue}. The comparison between the normal error and the $t_3$ error indicates the performance of quantile regression is robust to extremely large observations in the response. In contrast, the performance of mean regression suffers from heavy-tailed responses.
+
+## Simulation Results
+
+![](https://cdn.mathpix.com/snip/images/28iLlsguSbdQoR4qwTMqfzGPPWo68CJMSJ0Kb0wpQ80.original.fullsize.png)
+
+Overall speaking, $\hat{\beta}(t, s)$ captures the main trend of $\beta_0(t, s)$, though it is slightly flatter. A possible reason is that our algorithm selects a slightly larger $\lambda$ when implementing the estimation procedure.
+
+## Simulation Results
+
+![](https://cdn.mathpix.com/snip/images/A8Bm1NZX-oh9qGNLj6uHZhaYsjdsIX_1gTAKKXT7Cwo.original.fullsize.png)
+
+# Empirical Example
+
+## Panel Study of Income Dynamics {.smaller}
+
+The longest running longitudinal household survey in the world
+
+**Introduction**
+
+-   Conducted by the Survey Research Center (SRC) at the University of Michigan
+-   Started in 1968 and continued for over 50 years
+-   Since 1991, it has covered all 50 states in the United States
+
+**Core Sample**
+
+-   The Survey Research Center (the “SRC sample”): a nationally representative sample of 2,930 families
+-   The Survey of Economic Opportunity (the “SEO sample”): an over-sample of 1,872 low income families
+
+## PSID Sample Frame {.smaller}
+
+![](https://cdn.mathpix.com/snip/images/332BHz-Kzvuwenr9xynJITu4Ri6GPHo4zZp7NRMxqHg.original.fullsize.png)
+
+## Data
+
+-   Sample: PSID SRC sample
+-   Sample Size: 827 families with 1166 children born from 1967-1977
+-   Parental Income: parental family income from a child's age 0 to 19
+-   Children's Permanent Income: average family income of the child from ages 30 to 35
+
+Notes: Family income is the total income of the household head and their spouse, including income from labor, assets, and transfers.
+
+## Still Work In Progress
+
+![](https://cdn.mathpix.com/snip/images/5cU2UDVU0TeLfbX8hICDmdkZ0DkDH2aNFIDYAuMIgds.original.fullsize.png)
+
+::: {.incremental .fragment}
+Economic ladder: Role Model + Upward Mobility
+:::
+
+# The End
