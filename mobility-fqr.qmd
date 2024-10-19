@@ -52,7 +52,7 @@ Typically, $Y$ and $X$ are multiyear time averages of child and parental incomes
 ## Step 0: The norm (Mazumder, 2019) {.smaller}
 
 |       Study       |   Data   |                                                          Description of Method                                                          | Estimate |
-|:-------:|:-------:|:-------------------------------------------:|:-------:|
+|:-----------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------:|:--------:|
 |   Solon (1992).   |   PSID   |                   Uses a [**5-year**]{.red} average of annual earnings of fathers and a single year of sons' earnings                   |   0.41   |
 | Zimmerman (1992). |   NLS    |                    Uses a [**4-year**]{.red} average of fathers' hourly wage and a single year of sons' hourly wage                     |   0.39   |
 | zimmerman (1992). |   NLS    |                Uses a [**4-year**]{.red} average of fathers' annual earnings and a single year of sons' annual earnings                 |   0.54   |
